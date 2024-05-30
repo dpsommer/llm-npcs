@@ -18,10 +18,12 @@ def default_pipeline() -> spacy.Language:
     return __nlp
 
 
-def entity_extraction(pipeline: spacy.Language, message: str, context: str = None) -> Set[str]:
+def entity_extraction(message: str, pipeline: spacy.Language = None, context: str = None) -> Set[str]:
     """
     Uses spacy to extract entities from a given message as a comma-separated string.
     """
+    if not pipeline:
+        pipeline = default_pipeline()
     if context:
         return _coreference_extraction(pipeline=pipeline, message=message, context=context)
     doc = pipeline(f'{context}\n{message}')
@@ -42,6 +44,8 @@ def _coreference_extraction(pipeline: spacy.Language, message: str, context: str
     return refs
 
 
-def sentiment_analysis(pipeline: spacy.Language, message: str) -> Tuple[float, float]:
+def sentiment_analysis(message: str, pipeline: spacy.Language = None) -> Tuple[float, float]:
+    if not pipeline:
+        pipeline = default_pipeline()
     doc = pipeline(message)
     return (doc._.blob.polarity, doc._.blob.subjectivity)

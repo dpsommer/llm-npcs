@@ -3,7 +3,7 @@ import os
 import pytest
 from whoosh.filedb.filestore import RamStorage
 
-from npcs.memory import NPCMemorySchema, load_index, add_memories, search_memories
+from npcs.memory import NPCMemorySchema, NPCMemory, load_index, add_memories, search_memories
 
 TEST_INDEX_DIR = os.path.join(pytest.TEST_DIR_BASEPATH, 'test_index')
 
@@ -38,7 +38,7 @@ def memories():
 def in_memory_index(memories):
     storage = RamStorage()
     index = storage.create_index(NPCMemorySchema)
-    add_memories(index=index, data=memories)
+    add_memories(index=index, data=[NPCMemory(**m) for m in memories])
     yield index
     index.close()
 

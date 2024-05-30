@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from typing import Set
 
 from whoosh.fields import (
@@ -24,11 +24,11 @@ class NPCMemorySchema(SchemaClass):
 @dataclass
 class NPCMemory:
     npc: str
-    characters: Set[str]
     memory: str
-    entities: Set[str]
-    sentiment_polarity: float
-    sentiment_subjectivity: float
+    characters: Set[str] = field(default_factory=list)
+    entities: Set[str] = field(default_factory=list)
+    sentiment_polarity: float = 0.0
+    sentiment_subjectivity: float = 0.0
 
     def as_document(self):
         doc = asdict(self)
