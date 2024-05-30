@@ -7,7 +7,7 @@ tiktoken>=0.7.0
 click>=8.1.7
 Whoosh>=2.7.4
 # python -m spacy download en_core_web_sm
-spacy>=3.7.4
+spacy==3.5.4
 # python -m textblob.download_corpora
 spacytextblob>=4.0.0
 coreferee>=1.4.1
