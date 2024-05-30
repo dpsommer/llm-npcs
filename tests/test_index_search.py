@@ -32,6 +32,8 @@ def memories():
     ]
 
 
+# TODO: create a function in npcs.memory to abstract this so we don't rely
+# directly on whoosh here (we may switch to FAISS or another index)
 @pytest.fixture
 def in_memory_index(memories):
     storage = RamStorage()

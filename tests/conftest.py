@@ -2,7 +2,6 @@ import os
 import shutil
 
 import pytest
-import spacy
 
 TEST_DIR_BASEPATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -19,14 +18,6 @@ def pytest_runtest_setup(item):
 def pytest_configure():
     pytest.TEST_DIR_BASEPATH = TEST_DIR_BASEPATH
     pytest.DATA_DIR = os.path.join(TEST_DIR_BASEPATH, 'data')
-
-
-def nlp_pipeline():
-    nlp = spacy.load('en_core_web_sm')  # base model, entity extraction
-    nlp.add_pipe('spacytextblob')  # sentiment analysis
-    nlp.add_pipe('sentencizer')
-    nlp.add_pipe('coreferee')  # coreference identification
-    yield nlp
 
 
 @pytest.fixture

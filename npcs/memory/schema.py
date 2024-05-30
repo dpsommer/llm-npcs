@@ -9,6 +9,7 @@ from whoosh.fields import (
     NUMERIC
 )
 
+
 # is it better to store individual memories or whole conversations?
 class NPCMemorySchema(SchemaClass):
     npc = ID(stored=True)
