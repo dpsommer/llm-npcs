@@ -1,6 +1,8 @@
 from typing import Tuple, Set
 
 import spacy
+# we need to import this for the SpacyTextBlob pipeline component to work
+from spacytextblob.spacytextblob import SpacyTextBlob
 
 __nlp = None
 

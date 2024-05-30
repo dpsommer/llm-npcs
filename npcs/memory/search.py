@@ -26,6 +26,7 @@ def add_memories(index: FileIndex, data: List[NPCMemory]) -> None:
     # NB: consider using multisegment=True here for initial indexing
     # Not using procs to multithread as it breaks RamStorage (used in tests)
     w = index.writer(limitmb=512)
+    print(data)
     for memory in data:
         w.add_document(**memory.as_document())
     w.commit()
