@@ -1,0 +1,21 @@
+[build-system]
+requires = [
+    "setuptools>=62.1.0",
+    "wheel",
+    "setuptools_scm>=6.4.2"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+markers = [
+    "functional: used to run integration tests"
+]
+addopts = "-ra -q -p no:warnings --doctest-modules --ignore=_version.py"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+testpaths = [
+    "tests"
+]
+
+[tool.setuptools_scm]
+write_to = "npcs/_version.py"

@@ -1,0 +1,33 @@
+# ide
+
+**/.vscode/
+
+# python builds
+
+**/build/
+**/dist/
+**/*.egg-info/
+
+# cpython cache files
+
+**/__pycache__/
+
+# pytest files
+
+**/.pytest_cache
+
+# pyenv
+
+.python-version
+
+# setuptools scm
+
+**/_version.py
+
+# virtualenv
+
+**/venv/
+
+# misc
+
+TODO

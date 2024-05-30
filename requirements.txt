@@ -1,0 +1,17 @@
+langchain>=0.0.123
+openai>=0.27.2
+# needed for knowledge graph memory
+# networkx>=3.0
+# needed for conversation summary buffer memory
+tiktoken>=0.3.2
+click>=8.1.3
+Whoosh>=2.7.4
+# python -m spacy download en_core_web_sm
+spacy>=3.5.1
+# python -m textblob.download_corpora
+spacytextblob>=4.0.0
+coreferee>=1.4.0
+# python -m coreferee install en
+pytest>=7.2.2
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
