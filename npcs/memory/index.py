@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Dict, List
 
 from langchain.schema import BaseMemory
 from pydantic import BaseModel, Field
