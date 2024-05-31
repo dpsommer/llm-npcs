@@ -1,8 +1,9 @@
 from typing import Tuple, Set
 
 import spacy
+from spacy.tokens import Doc
 # we need to import this for the SpacyTextBlob pipeline component to work
-from spacytextblob.spacytextblob import SpacyTextBlob
+from spacytextblob.spacytextblob import SpacyTextBlob  # noqa # pylint: disable=unused-import
 
 __nlp = None
 
@@ -26,17 +27,15 @@ def entity_extraction(message: str, pipeline: spacy.Language = None, context: st
     """
     if not pipeline:
         pipeline = default_pipeline()
-    if context:
-        return _coreference_extraction(pipeline=pipeline, message=message, context=context)
     doc = pipeline(f'{context}\n{message}')
+    if context:
+        tokenizer = pipeline.tokenizer
+        return _coreference_extraction(doc=doc, tokens_in_context=len(tokenizer(context)))
     return {str(e) for e in doc.ents}
 
 
-def _coreference_extraction(pipeline: spacy.Language, message: str, context: str) -> any:
+def _coreference_extraction(doc: Doc, tokens_in_context: int) -> any:
     refs = set()
-    tokenizer = pipeline.tokenizer
-    tokens_in_context = len(tokenizer(context))
-    doc = pipeline(f'{context}\n{message}')
     for chain in doc._.coref_chains:
         # last index of the ref chain is in the message
         if chain[-1].root_index > tokens_in_context:
