@@ -15,10 +15,16 @@
 # pytest files
 
 **/.pytest_cache
+.coverage
+coverage.xml
 
 # pyenv
 
 .python-version
+
+# tox
+
+**/.tox/
 
 # setuptools scm
 
