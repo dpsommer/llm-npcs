@@ -1,9 +1,11 @@
-.PHONY: init build test coverage
+.PHONY: init install test coverage
 
-init: build test
+init: install test
 
-build:
+install:
 	pip install -r requirements-dev.txt
+	python -m textblob.download_corpora
+	python -m coreferee install en
 
 test:
 	pip install -qq --upgrade tox
