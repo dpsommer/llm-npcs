@@ -1,0 +1,7 @@
+-r requirements.txt
+# install in editable mode for development
+-e .
+pytest>=8.2.1
+pytest-cov>=5.0.0
+pytest-mock>=3.14.0
+tox>=4.15.0
