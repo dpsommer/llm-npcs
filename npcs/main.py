@@ -1,14 +1,14 @@
 from typing import List
 
-from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationSummaryBufferMemory
+from langchain_community.llms import HuggingFaceEndpoint
 
 from npcs.memory import IndexedMemory
 from npcs.utils.constants import (
-    OPENAI_TEMP,
-    OPENAI_FREQUENCY_PENALTY,
+    LLM_TEMP,
+    LLM_FREQUENCY_PENALTY,
     CONVERSATION_SUMMARY_TOKEN_LIMIT,
 )
 
@@ -23,12 +23,6 @@ Relevant Information:
 Conversation:
 Player: {input}
 NPC:"""
-
-
-def conversation(prompt):
-    # player (or other npc?) starts a conversation with an initial prompt
-    #
-    pass
 
 
 class NPC:
@@ -46,10 +40,10 @@ class NPC:
 
 
 if __name__ == '__main__':
-    # FIXME: is langchain even useful here..?
-    llm = OpenAI(
-        temperature=OPENAI_TEMP,
-        frequency_penalty=OPENAI_FREQUENCY_PENALTY,
+    llm = HuggingFaceEndpoint(
+        repo_id="HuggingFaceH4/zephyr-7b-beta",
+        temperature=LLM_TEMP,
+        repetition_penalty=LLM_FREQUENCY_PENALTY,
     )
     prompt = PromptTemplate(template=TEMPLATE, input_variables=["history", "input"])
     convo = ConversationChain(

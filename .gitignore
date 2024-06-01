@@ -36,4 +36,5 @@ coverage.xml
 
 # misc
 
+.env
 TODO
