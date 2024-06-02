@@ -1,11 +1,12 @@
 from typing import Dict, List
 
 from langchain.schema import BaseMemory
-from pydantic import BaseModel, Field
-from spacy import Language
+# XXX: we need to pin pydantic to v1 as langchain internals have not migrated to v2
+# see https://python.langchain.com/v0.1/docs/guides/development/pydantic_compatibility/
+from pydantic.v1 import BaseModel, Field
 from whoosh.index import FileIndex
 
-from npcs.memory.nlp import default_pipeline, entity_extraction, sentiment_analysis
+from npcs.memory.nlp import NLPPipeline
 from npcs.memory.schema import NPCMemory
 from npcs.memory.search import default_index, add_memories, search_memories
 
@@ -13,7 +14,7 @@ from npcs.memory.search import default_index, add_memories, search_memories
 class IndexedMemory(BaseMemory, BaseModel):
     name: str = ""
     index: FileIndex = Field(default_factory=default_index)
-    pipeline: Language = Field(default_factory=default_pipeline)
+    nlp: NLPPipeline = Field(default_factory=NLPPipeline)
     memory_key: str = "history"  #: :meta private:
 
     @property
@@ -36,14 +37,13 @@ class IndexedMemory(BaseMemory, BaseModel):
         ])
 
     def _memory_from_text(self, text: str) -> NPCMemory:
-        # FIXME: need to extract text/context?
-        polarity, subjectivity = sentiment_analysis(self.pipeline, text)
+        doc = self.nlp.run(text)
         return NPCMemory(
             npc=self.name,
-            memory=text,
-            entities=entity_extraction(self.pipeline, text),
-            sentiment_polarity=polarity,
-            sentiment_subjectivity=subjectivity,
+            memory=doc.resolved_text,
+            entities=doc.entities,
+            sentiment_polarity=doc.sentiment_analysis.polarity,
+            sentiment_subjectivity=doc.sentiment_analysis.subjectivity,
         )
 
     def clear(self) -> None:

@@ -3,6 +3,8 @@ import shutil
 
 import pytest
 
+from npcs.memory import NLPPipeline
+
 TEST_DIR_BASEPATH = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -35,3 +37,8 @@ def clean_test_subtree():
                     print('Failed to delete %s. Reason: %s' % (file_path, e))
             os.rmdir(dir)
     return clean_tree
+
+
+@pytest.fixture(scope='package')
+def nlp():
+    return NLPPipeline()
