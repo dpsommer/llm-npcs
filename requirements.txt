@@ -1,15 +1,13 @@
-langchain>=0.2.1
-openai>=1.30.5
-# needed for knowledge graph memory
-# networkx>=3.0
+langchain==0.2.1
+langchain-community==0.2.1
+langchain-huggingface==0.0.1
 # needed for conversation summary buffer memory
-tiktoken>=0.7.0
-click>=8.1.7
-Whoosh>=2.7.4
-spacy-experimental==0.6.4
+tiktoken==0.7.0
+click==8.1.7
+Whoosh==2.7.4
 spacy==3.7.4
-# spacy core model: en_core_web_sm v3.5.0
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
-spacytextblob>=4.0.0
+# spacy core model: en_core_web_sm v3.7.1
+en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
+spacytextblob==4.0.0
 # python -m textblob.download_corpora
 fastcoref==2.1.6
