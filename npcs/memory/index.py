@@ -15,7 +15,7 @@ class IndexedMemory(BaseMemory, BaseModel):
     name: str = ""
     index: FileIndex = Field(default_factory=default_index)
     nlp: NLPPipeline = Field(default_factory=NLPPipeline)
-    memory_key: str = "history"  #: :meta private:
+    memory_key: str = "history"
 
     @property
     def memory_variables(self) -> List[str]:
@@ -23,14 +23,16 @@ class IndexedMemory(BaseMemory, BaseModel):
 
     def load_memory_variables(self, inputs: Dict[str, str]) -> Dict[str, str]:
         print('loading memories: ', inputs)
-        search = f'npc={self.name} entities='
-        return {self.memory_key: mem['memory'] for mem in search_memories(self.index, search)}
+        # TODO: search on entities as well. we will need to run the NLP
+        # pipeline when saving memories; can we avoid running it both times?
+        search = f'npc:"{self.name}"'
+        memories = "\n".join([mem.memory for mem in search_memories(self.index, search)])
+        return {self.memory_key: memories}
 
     def save_context(self, inputs: Dict[str, str], outputs: Dict[str, str]) -> None:
         print('saving memories: ', inputs, outputs)
         input_text = '\n'.join(inputs.values())
         output_text = '\n'.join(outputs.values())
-        # TODO: sentiment analysis on the output?
         add_memories(self.index, [
             self._memory_from_text(input_text),
             self._memory_from_text(output_text),
