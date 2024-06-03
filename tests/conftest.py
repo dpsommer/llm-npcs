@@ -50,26 +50,26 @@ def memories():
         NPCMemory(
             npc="John Doe",
             memory="A mug of ale costs 4 copper pieces.",
-            entities=["ale"],
-            sentiment_polarity=0,
+            entities={"ale"},
+            sentiment_polarity=.0,
         ),
         NPCMemory(
             npc="John Doe",
             memory="This inn's name is the Silver Fox.",
-            entities=["Silver Fox"],
-            sentiment_polarity=0,
+            entities={"Silver Fox"},
+            sentiment_polarity=.0,
         ),
         NPCMemory(
             npc="John Doe",
             memory="It costs 1 silver piece a night to stay at the inn.",
-            entities=["Silver Fox"],
-            sentiment_polarity=0,
+            entities={"Silver Fox"},
+            sentiment_polarity=.0,
         ),
         NPCMemory(
             npc="John Doe",
             memory="A mug of ale costs 4 copper pieces at the Silver Fox.",
-            entities=["ale", "Silver Fox"],
-            sentiment_polarity=0,
+            entities={"ale", "Silver Fox"},
+            sentiment_polarity=.0,
         )
     ]
 
