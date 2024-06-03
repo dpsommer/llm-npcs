@@ -34,16 +34,16 @@ def add_memories(index: FileIndex, data: List[NPCMemory]) -> None:
     # Not using procs to multithread as it breaks RamStorage (used in tests)
     w = index.writer(limitmb=512)
     for memory in data:
-        w.add_document(**memory.as_document())
+        w.add_document(**memory.as_dict())
     w.commit()
 
 
-def search_memories(index: FileIndex, search_string: str, results_count=DEFAULT_SEARCH_RESULT_COUNT) -> List[dict]:
+def search_memories(index: FileIndex, search_string: str, results_count=DEFAULT_SEARCH_RESULT_COUNT) -> List[NPCMemory]:
     results = []
     with index.searcher() as searcher:
         parser = QueryParser('memory', index.schema)
         query = parser.parse(search_string.encode())
         search_results = searcher.search(query, limit=results_count)
         for result in search_results:
-            results.append(dict(result))
+            results.append(NPCMemory.from_dict(dict(result)))
     return results
