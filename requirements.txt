@@ -7,7 +7,7 @@ click==8.1.7
 Whoosh==2.7.4
 spacy==3.7.4
 # spacy core model: en_core_web_sm v3.7.1
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
+en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
 spacytextblob==4.0.0
 # python -m textblob.download_corpora
 fastcoref==2.1.6
