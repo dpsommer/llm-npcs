@@ -5,8 +5,9 @@ from whoosh.filedb.filestore import RamStorage
 from whoosh.index import FileIndex, create_in, exists_in, open_dir
 from whoosh.qparser import QueryParser
 
-from npcs.memory.schema import NPCMemory, NPCMemorySchema
 from npcs.utils.constants import ROOT_DIRECTORY
+
+from .schema import NPCMemory, NPCMemorySchema
 
 DEFAULT_SEARCH_RESULT_COUNT = 10
 

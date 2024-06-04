@@ -7,9 +7,9 @@ from langchain.schema import BaseMemory
 from pydantic.v1 import BaseModel, Field
 from whoosh.index import FileIndex
 
-from npcs.memory.nlp import NLPPipeline
-from npcs.memory.schema import NPCMemory
-from npcs.memory.search import add_memories, default_index, search_memories
+from .nlp import NLPPipeline
+from .schema import NPCMemory
+from .search import add_memories, default_index, search_memories
 
 
 class IndexedMemory(BaseMemory, BaseModel):
