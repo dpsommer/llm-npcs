@@ -5,23 +5,23 @@ NPC_NAME = "Jimmy Buffett"
 SEED_MEMORIES = [
     NPCMemory(
         npc="Jimmy Buffett",
-        memory="A mug of ale costs 4 copper pieces.",
-        entities={"ale"},
+        memory="A margarita costs 4 copper pieces.",
+        entities={"margarita"},
     ),
     NPCMemory(
         npc="Jimmy Buffett",
-        memory="This inn's name is the Silver Fox.",
-        entities={"Silver Fox"},
+        memory="This inn's name is Margaritaville.",
+        entities={"Margaritaville"},
     ),
     NPCMemory(
         npc="Jimmy Buffett",
-        memory="It costs 1 silver piece a night to stay at the inn.",
-        entities={"Silver Fox"},
+        memory="The inn is in Havana.",
+        entities={"Margaritaville"},
     ),
     NPCMemory(
         npc="Jimmy Buffett",
-        memory="A mug of ale costs 4 copper pieces at the Silver Fox.",
-        entities={"ale", "Silver Fox"},
+        memory="A margarita costs 4 copper pieces at Margaritaville.",
+        entities={"margarita", "Margaritaville"},
     ),
 ]
 
@@ -31,8 +31,8 @@ def run():
         convo = Conversation(name=NPC_NAME, index=idx)
 
         while True:
-            message = input("Prompt: ")
-            print(convo.say(message))
+            message = input("> ")
+            print(convo.say(message.lstrip("> ")))
 
 
 if __name__ == "__main__":
