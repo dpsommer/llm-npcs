@@ -2,10 +2,10 @@ import os
 from typing import List
 
 from whoosh.filedb.filestore import RamStorage
-from whoosh.index import FileIndex, create_in, open_dir, exists_in
+from whoosh.index import FileIndex, create_in, exists_in, open_dir
 from whoosh.qparser import QueryParser
 
-from npcs.memory.schema import NPCMemorySchema, NPCMemory
+from npcs.memory.schema import NPCMemory, NPCMemorySchema
 from npcs.utils.constants import ROOT_DIRECTORY
 
 DEFAULT_SEARCH_RESULT_COUNT = 10
@@ -14,8 +14,8 @@ DEFAULT_SEARCH_RESULT_COUNT = 10
 # TODO: abstract this interface from the underlying implementation
 # so we can swap Whoosh for FAISS or another index
 def default_index():
-    index_path = os.path.join(ROOT_DIRECTORY, 'index')
-    return load_index(index_path=index_path, index_name='default')
+    index_path = os.path.join(ROOT_DIRECTORY, "index")
+    return load_index(index_path=index_path, index_name="default")
 
 
 def ram_index():
@@ -38,10 +38,12 @@ def add_memories(index: FileIndex, data: List[NPCMemory]) -> None:
     w.commit()
 
 
-def search_memories(index: FileIndex, search_string: str, results_count=DEFAULT_SEARCH_RESULT_COUNT) -> List[NPCMemory]:
+def search_memories(
+    index: FileIndex, search_string: str, results_count=DEFAULT_SEARCH_RESULT_COUNT
+) -> List[NPCMemory]:
     results = []
     with index.searcher() as searcher:
-        parser = QueryParser('memory', index.schema)
+        parser = QueryParser("memory", index.schema)
         query = parser.parse(search_string.encode())
         search_results = searcher.search(query, limit=results_count)
         for result in search_results:

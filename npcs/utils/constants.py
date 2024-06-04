@@ -15,4 +15,4 @@ CONVERSATION_SUMMARY_TOKEN_LIMIT = 2048
 # that works x-platform (%APPDATA% on Windows) and allows
 # the user to specify a custom path.
 HOME_DIRECTORY = Path.home()
-ROOT_DIRECTORY = HOME_DIRECTORY / '.config' / 'npcs'
+ROOT_DIRECTORY = HOME_DIRECTORY / ".config" / "npcs"

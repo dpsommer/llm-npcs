@@ -10,26 +10,26 @@ They travelled to Spain because they loved the country very much."""
 
 def test_entity_extraction(nlp):
     doc = nlp.run("This inn's name is the Silver Fox.")
-    assert doc.entities == {'the Silver Fox'}
+    assert doc.entities == {"the Silver Fox"}
 
 
 def test_repeated_entity_names(nlp):
     doc = nlp.run("Bob says hello. Jane says 'Hi, Bob'.")
-    assert doc.entities == {'Bob', 'Jane'}
+    assert doc.entities == {"Bob", "Jane"}
 
 
 def test_entity_extraction_with_context(nlp, history):
     doc = nlp.run(
         message="Their flight took a while, but the weather was beautiful when they landed.",
-        context=history
+        context=history,
     )
-    assert doc.entities == {'Peter', 'Nancy', 'Spain'}
+    assert doc.entities == {"Peter", "Nancy", "Spain"}
 
 
 def test_coref_resolution(nlp, history):
     doc = nlp.run(
         message="He spent most of the time on the beach, while she explored the town.",
-        context=history
+        context=history,
     )
     assert "Peter" in doc.resolved_text and "Nancy" in doc.resolved_text
 
@@ -50,6 +50,6 @@ def test_coref_resolution(nlp, history):
 def test_plural_coref_resolution(nlp, history):
     doc = nlp.run(
         message="They had a wonderful trip and returned home refreshed.",
-        context=history
+        context=history,
     )
     assert "Peter and Nancy" in doc.resolved_text
