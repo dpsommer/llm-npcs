@@ -1,6 +1,5 @@
 from langchain.chains.conversation.base import ConversationChain
 from langchain.prompts import (
-    AIMessagePromptTemplate,
     ChatPromptTemplate,
     HumanMessagePromptTemplate,
     SystemMessagePromptTemplate,
