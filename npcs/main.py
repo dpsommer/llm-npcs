@@ -22,13 +22,14 @@ SEED_MEMORIES = [
         npc="Jimmy Buffett",
         memory="A mug of ale costs 4 copper pieces at the Silver Fox.",
         entities={"ale", "Silver Fox"},
-    )
+    ),
 ]
 
 
 # pre-seed the index with some memories
 def seed_index():
     from npcs.memory.search import default_index, search_memories
+
     idx = default_index()
     old_memories = search_memories(idx, f'npc:"{NPC_NAME}"')
     for memory in old_memories:
@@ -48,5 +49,6 @@ def run():
         message = input("Prompt: ")
         print(convo.say(message))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     run()

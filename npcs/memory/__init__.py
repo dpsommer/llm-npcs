@@ -1,8 +1,8 @@
-from .nlp import NLPPipeline
 from .conversation import Conversation
 from .index import IndexedMemory
-from .schema import NPCMemorySchema, NPCMemory
-from .search import load_index, add_memories, search_memories
+from .nlp import NLPPipeline
+from .schema import NPCMemory, NPCMemorySchema
+from .search import add_memories, load_index, search_memories
 
 __all__ = [
     "IndexedMemory",

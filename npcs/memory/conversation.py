@@ -1,35 +1,38 @@
 from langchain.chains.conversation.base import ConversationChain
 from langchain.prompts import (
-    SystemMessagePromptTemplate,
-    HumanMessagePromptTemplate,
     AIMessagePromptTemplate,
-    ChatPromptTemplate
+    ChatPromptTemplate,
+    HumanMessagePromptTemplate,
+    SystemMessagePromptTemplate,
 )
 from langchain_huggingface import HuggingFaceEndpoint
+
+from npcs.utils.constants import (
+    CONVERSATION_SUMMARY_TOKEN_LIMIT,
+    LLM_FREQUENCY_PENALTY,
+    LLM_TEMP,
+)
 
 from .index import IndexedMemory
 from .nlp import NLPPipeline
 from .search import default_index
-from npcs.utils.constants import (
-    LLM_TEMP,
-    LLM_FREQUENCY_PENALTY,
-    CONVERSATION_SUMMARY_TOKEN_LIMIT,
-)
 
 # TODO: improve the base prompt with more information about the NPC
 # this should probably pull from a separate store containing details
 # about the character
 messages = [
-    SystemMessagePromptTemplate.from_template("""Reply to the input from the Player below as though you are an NPC.
+    SystemMessagePromptTemplate.from_template(
+        """Reply to the input from the Player below as though you are an NPC.
 The NPC will provide the Player with contextual information.
 The NPC ONLY uses information contained in the "Relevant Information" section and does not hallucinate.
 
 Relevant Information:
 
 {history}
-"""),
+"""
+    ),
     HumanMessagePromptTemplate.from_template("Player: {input}"),
-    AIMessagePromptTemplate.from_template("NPC: ")
+    AIMessagePromptTemplate.from_template("NPC: "),
 ]
 
 
@@ -50,8 +53,8 @@ class Conversation:
                 index=index or default_index(),
                 nlp=nlp or NLPPipeline(),
                 llm=llm,
-                human_prefix='Player',
-                ai_prefix='NPC',
+                human_prefix="Player",
+                ai_prefix="NPC",
                 max_token_limit=CONVERSATION_SUMMARY_TOKEN_LIMIT,
             ),
         )
