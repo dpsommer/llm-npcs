@@ -21,17 +21,16 @@ from .search import NPCMemoryVectorStore
 # about the character
 messages = [
     SystemMessagePromptTemplate.from_template(
-        """Reply to the input from the Player below as though you are an NPC.
-The NPC will provide the Player with contextual information.
-The NPC ONLY uses information contained in the "Relevant Information" section and does not hallucinate.
+        """Reply to the input as though you are {name}.
+Only use information contained in the "Relevant Information" section.
+Then, wait for the next input.
 
 Relevant Information:
 
 {history}
 """
     ),
-    HumanMessagePromptTemplate.from_template("Player: {input}"),
-    AIMessagePromptTemplate.from_template("NPC: "),
+    HumanMessagePromptTemplate.from_template("{input}"),
 ]
 
 
