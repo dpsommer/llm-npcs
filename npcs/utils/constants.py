@@ -8,6 +8,7 @@ LLM_TEMP = 0.8
 # helps to prevent repetition of words and phrases in
 # sequential responses
 LLM_FREQUENCY_PENALTY = 1.0
+DEFAULT_SEARCH_RESULT_COUNT = 5
 
 CONVERSATION_SUMMARY_TOKEN_LIMIT = 2048
 
