@@ -8,11 +8,15 @@ LLM_TEMP = 0.8
 # helps to prevent repetition of words and phrases in
 # sequential responses
 LLM_FREQUENCY_PENALTY = 1.0
+DEFAULT_SEARCH_RESULT_COUNT = 5
 
 CONVERSATION_SUMMARY_TOKEN_LIMIT = 2048
+
+NPC_INDEX_NAME = "npc_memories"
 
 # FIXME: change this to a function, e.g. get_index_dir
 # that works x-platform (%APPDATA% on Windows) and allows
 # the user to specify a custom path.
 HOME_DIRECTORY = Path.home()
 ROOT_DIRECTORY = HOME_DIRECTORY / ".config" / "npcs"
+INDEX_PATH = ROOT_DIRECTORY / "index"

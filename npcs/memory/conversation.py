@@ -14,8 +14,7 @@ from npcs.utils.constants import (
 )
 
 from .index import IndexedMemory
-from .nlp import NLPPipeline
-from .search import default_index
+from .search import NPCMemoryVectorStore
 
 # TODO: improve the base prompt with more information about the NPC
 # this should probably pull from a separate store containing details
@@ -37,7 +36,7 @@ Relevant Information:
 
 
 class Conversation:
-    def __init__(self, name: str, nlp=None, index=None) -> None:
+    def __init__(self, name: str, index: NPCMemoryVectorStore) -> None:
         llm = HuggingFaceEndpoint(
             repo_id="HuggingFaceH4/zephyr-7b-beta",
             temperature=LLM_TEMP,
@@ -50,8 +49,7 @@ class Conversation:
             prompt=prompt,
             memory=IndexedMemory(
                 name=name,
-                index=index or default_index(),
-                nlp=nlp or NLPPipeline(),
+                index=index,
                 llm=llm,
                 human_prefix="Player",
                 ai_prefix="NPC",

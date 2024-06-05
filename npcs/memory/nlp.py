@@ -31,3 +31,11 @@ class NLPPipeline:
                 component_cfg={"fastcoref": {"resolve_text": True}},
             )
         )
+
+
+# Use the Global Object Pattern as it's recommended over a singleton
+__default = NLPPipeline()
+
+
+def run(message: str, context: str = None) -> NLPResult:
+    return __default.run(message, context)
