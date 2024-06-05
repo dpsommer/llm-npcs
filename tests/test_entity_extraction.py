@@ -1,5 +1,7 @@
 import pytest
 
+from npcs.memory import nlp
+
 
 @pytest.fixture
 def history():
@@ -8,17 +10,17 @@ He and Nancy decided they needed a holiday.
 They travelled to Spain because they loved the country very much."""
 
 
-def test_entity_extraction(nlp):
+def test_entity_extraction():
     doc = nlp.run("This inn's name is the Silver Fox.")
     assert doc.entities == {"the Silver Fox"}
 
 
-def test_repeated_entity_names(nlp):
+def test_repeated_entity_names():
     doc = nlp.run("Bob says hello. Jane says 'Hi, Bob'.")
     assert doc.entities == {"Bob", "Jane"}
 
 
-def test_entity_extraction_with_context(nlp, history):
+def test_entity_extraction_with_context(history):
     doc = nlp.run(
         message="Their flight took a while, but the weather was beautiful when they landed.",
         context=history,
@@ -26,7 +28,7 @@ def test_entity_extraction_with_context(nlp, history):
     assert doc.entities == {"Peter", "Nancy", "Spain"}
 
 
-def test_coref_resolution(nlp, history):
+def test_coref_resolution(history):
     doc = nlp.run(
         message="He spent most of the time on the beach, while she explored the town.",
         context=history,
@@ -34,7 +36,7 @@ def test_coref_resolution(nlp, history):
     assert "Peter" in doc.resolved_text and "Nancy" in doc.resolved_text
 
 
-# TODO: fastcoref is pretty good, but has some pretty gaping holes in its
+# XXX: fastcoref is pretty good, but has some pretty gaping holes in its
 # resolution. For example, this text is resolved as follows:
 #
 # Although Peter was very busy with Peter's work, Peter had had enough of it.
@@ -47,7 +49,7 @@ def test_coref_resolution(nlp, history):
 #
 # It would be nice to use one of the spacy models, but both coreferee and
 # the spacy-experimental coref models are pinned to older versions of spacy.
-def test_plural_coref_resolution(nlp, history):
+def test_plural_coref_resolution(history):
     doc = nlp.run(
         message="They had a wonderful trip and returned home refreshed.",
         context=history,

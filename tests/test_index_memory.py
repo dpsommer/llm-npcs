@@ -1,3 +1,4 @@
+import random
 import re
 
 import pytest
@@ -15,8 +16,8 @@ def mock_huggingface_auth(monkeypatch, requests_mock):
 
 
 @pytest.fixture
-def conversation(in_memory_index, nlp):
-    yield Conversation(name="John Doe", index=in_memory_index, nlp=nlp)
+def conversation(in_memory_index):
+    yield Conversation(name="John Doe", index=in_memory_index)
 
 
 def test_memory_loading(in_memory_index):
@@ -42,6 +43,11 @@ It charges 4 copper pieces for ale and 1 silver piece to stay a night."""
             }
         ],
     )
+    # mock the embeddings generated for the say function
+    matcher = re.compile(
+        r"https://api-inference.huggingface.co/pipeline/feature-extraction/.*"
+    )
+    requests_mock.post(matcher, json=[[random.random()], [random.random()]])
     response = conversation.say("Tell me about the Silver Fox.")
     assert "inn" in response
 

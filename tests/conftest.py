@@ -1,12 +1,13 @@
 import os
+import random
+import re
 import shutil
 from pathlib import Path
 
 import pytest
 
-from npcs.memory import NLPPipeline
 from npcs.memory.schema import NPCMemory
-from npcs.memory.search import add_memories, load_index, ram_index
+from npcs.memory.search import RAMVectorStore
 
 TEST_DIR_BASEPATH = Path(__file__).resolve().parent
 TEST_INDEX_DIR = TEST_DIR_BASEPATH / "test_index"
@@ -44,11 +45,6 @@ def clean_test_subtree():
     return clean_tree
 
 
-@pytest.fixture(scope="package")
-def nlp():
-    return NLPPipeline()
-
-
 @pytest.fixture
 def memories():
     return [
@@ -80,17 +76,11 @@ def memories():
 
 
 @pytest.fixture
-def in_memory_index(memories):
-    index = ram_index()
-    add_memories(index=index, data=memories)
-    yield index
-    index.close()
-
-
-@pytest.mark.functional
-@pytest.fixture
-def file_based_index(memories, clean_test_subtree):
-    test_index = load_index(TEST_INDEX_DIR, "test")
-    add_memories(index=test_index, data=memories)
-    yield test_index
-    clean_test_subtree(TEST_INDEX_DIR)
+def in_memory_index(requests_mock, memories):
+    # mock the memory embeddings
+    matcher = re.compile(
+        r"https://api-inference.huggingface.co/pipeline/feature-extraction/.*"
+    )
+    requests_mock.post(matcher, json=[[random.random()] for _ in memories])
+    with RAMVectorStore(memories) as idx:
+        yield idx
