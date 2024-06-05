@@ -10,7 +10,7 @@ SEED_MEMORIES = [
     ),
     NPCMemory(
         npc="Jimmy Buffett",
-        memory="This inn's name is Margaritaville.",
+        memory="The name of this inn is Margaritaville.",
         entities={"Margaritaville"},
     ),
     NPCMemory(

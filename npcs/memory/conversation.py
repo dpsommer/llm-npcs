@@ -1,9 +1,5 @@
 from langchain.chains.conversation.base import ConversationChain
-from langchain.prompts import (
-    ChatPromptTemplate,
-    HumanMessagePromptTemplate,
-    SystemMessagePromptTemplate,
-)
+from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint
 
 from npcs.utils.constants import (
@@ -18,19 +14,20 @@ from .search import NPCMemoryVectorStore
 # TODO: improve the base prompt with more information about the NPC
 # this should probably pull from a separate store containing details
 # about the character
-messages = [
-    SystemMessagePromptTemplate.from_template(
-        """Reply to the input as though you are {name}.
-Only use information contained in the "Relevant Information" section.
-Then, wait for the next input.
+TEMPLATE = """
+<|system|>
+Adopt the personality described in the character section below. Respond with a single message to the user.
+Consider the user-provided context and conversation history when writing a response. Ensure that the response is coherent and in character.
 
-Relevant Information:
+Character:
 
+Name: {name}
+<|user|>
+Conversation History:
 {history}
+User: {input}
+<|model|>{name}:
 """
-    ),
-    HumanMessagePromptTemplate.from_template("{input}"),
-]
 
 
 class Conversation:
@@ -40,7 +37,10 @@ class Conversation:
             temperature=LLM_TEMP,
             repetition_penalty=LLM_FREQUENCY_PENALTY,
         )
-        prompt = ChatPromptTemplate.from_messages(messages=messages)
+        prompt = PromptTemplate(
+            input_variables=["name", "input", "history"], template=TEMPLATE
+        )
+        self._name = name
         self._conversation_chain = ConversationChain(
             llm=llm,
             verbose=False,
