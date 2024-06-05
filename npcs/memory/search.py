@@ -27,7 +27,7 @@ class NPCMemoryVectorStore(ABC):
         except Exception:
             # if we can't load, create a new store
             print("No existing vector store, creating...")
-            self._create_vector_store
+            self._create_vector_store()
 
     @abstractmethod
     def _load_vector_store(self) -> VectorStore:
