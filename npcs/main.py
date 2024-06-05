@@ -1,4 +1,4 @@
-from npcs.memory import Conversation, NPCMemory
+from npcs.memory import Conversation, FAISSVectorStore, NPCMemory
 
 # const values for testing the LLM
 NPC_NAME = "Jimmy Buffett"
@@ -26,28 +26,13 @@ SEED_MEMORIES = [
 ]
 
 
-# pre-seed the index with some memories
-def seed_index():
-    from npcs.memory.search import default_index, search_memories
-
-    idx = default_index()
-    old_memories = search_memories(idx, f'npc:"{NPC_NAME}"')
-    for memory in old_memories:
-        print(memory.memory)
-    w = idx.writer()
-    w.delete_by_term("npc", NPC_NAME)
-    for memory in SEED_MEMORIES:
-        w.add_document(**memory.as_dict())
-    w.commit()
-
-
 def run():
-    seed_index()
-    convo = Conversation(name=NPC_NAME)
+    with FAISSVectorStore(SEED_MEMORIES) as idx:
+        convo = Conversation(name=NPC_NAME, index=idx)
 
-    while True:
-        message = input("Prompt: ")
-        print(convo.say(message))
+        while True:
+            message = input("Prompt: ")
+            print(convo.say(message))
 
 
 if __name__ == "__main__":
