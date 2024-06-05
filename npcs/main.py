@@ -16,12 +16,12 @@ SEED_MEMORIES = [
     NPCMemory(
         npc="Jimmy Buffett",
         memory="The inn is in Havana.",
-        entities={"Margaritaville"},
+        entities={"Margaritaville", "Havana"},
     ),
     NPCMemory(
         npc="Jimmy Buffett",
-        memory="A margarita costs 4 copper pieces at Margaritaville.",
-        entities={"margarita", "Margaritaville"},
+        memory="It costs 1 silver piece to stay the night at Margaritaville.",
+        entities={"Margaritaville"},
     ),
 ]
 
