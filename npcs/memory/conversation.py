@@ -36,7 +36,7 @@ Relevant Information:
 
 
 class Conversation:
-    def __init__(self, name: str, index: NPCMemoryVectorStore, nlp=None) -> None:
+    def __init__(self, name: str, index: NPCMemoryVectorStore) -> None:
         llm = HuggingFaceEndpoint(
             repo_id="HuggingFaceH4/zephyr-7b-beta",
             temperature=LLM_TEMP,
