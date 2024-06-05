@@ -41,6 +41,7 @@ chat_prompt = tokenizer.apply_chat_template(
     messages, tokenize=False, add_generation_prompt=True, return_tensors="pt"
 )
 # append character name to assistant generation prompt
+# otherwise the model will prepend this to the response
 template = chat_prompt + "{name}:"
 
 
