@@ -1,12 +1,12 @@
 from typing import Dict, List
 
-import nlp
 from langchain.schema import BaseMemory
 
 # XXX: we need to pin pydantic to v1 as langchain internals have not migrated to v2
 # see https://python.langchain.com/v0.1/docs/guides/development/pydantic_compatibility/
 from pydantic.v1 import BaseModel
 
+from . import nlp
 from .schema import NPCMemory
 from .search import NPCMemoryVectorStore
 
@@ -25,9 +25,7 @@ class IndexedMemory(BaseMemory, BaseModel):
         # TODO: search on entities as well. we will need to run the NLP
         # pipeline when saving memories; can we avoid running it both times?
         search = f'npc:"{self.name}"'
-        memories = "\n".join(
-            [mem.memory for mem in self.index.search_memories(self.index, search)]
-        )
+        memories = "\n".join([mem.memory for mem in self.index.search_memories(search)])
         return {self.memory_key: memories}
 
     def save_context(self, inputs: Dict[str, str], outputs: Dict[str, str]) -> None:
@@ -35,7 +33,6 @@ class IndexedMemory(BaseMemory, BaseModel):
         input_text = "\n".join(inputs.values())
         output_text = "\n".join(outputs.values())
         self.index.add_memories(
-            self.index,
             [
                 self._memory_from_text(input_text),
                 self._memory_from_text(output_text),
