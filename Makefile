@@ -9,7 +9,6 @@ install:
 	@python -m textblob.download_corpora
 ifeq ($(TRUNK_INSTALLED), 0)
 	@curl https://get.trunk.io -fsSL | bash -s -- -y
-	@trunk init
 endif
 
 trunk:

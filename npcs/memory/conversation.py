@@ -1,11 +1,7 @@
 from langchain.chains.conversation.base import ConversationChain
-from langchain.prompts import (
-    AIMessagePromptTemplate,
-    ChatPromptTemplate,
-    HumanMessagePromptTemplate,
-    SystemMessagePromptTemplate,
-)
+from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint
+from transformers import AutoTokenizer
 
 from npcs.utils.constants import (
     CONVERSATION_SUMMARY_TOKEN_LIMIT,
@@ -16,37 +12,50 @@ from npcs.utils.constants import (
 from .index import IndexedMemory
 from .search import NPCMemoryVectorStore
 
+MODEL = "HuggingFaceH4/zephyr-7b-beta"
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+
 # TODO: improve the base prompt with more information about the NPC
 # this should probably pull from a separate store containing details
 # about the character
 messages = [
-    SystemMessagePromptTemplate.from_template(
-        """Reply to the input from the Player below as though you are an NPC.
-The NPC will provide the Player with contextual information.
-The NPC ONLY uses information contained in the "Relevant Information" section and does not hallucinate.
+    {
+        "role": "system",
+        "content": """Adopt the personality described in the character section below. Respond with a single message to the user.
+Consider the user-provided context and conversation history when writing a response. Ensure that the response is coherent and in character.
 
-Relevant Information:
+Character:
 
+Name: {name}""",
+    },
+    {
+        "role": "user",
+        "content": """Conversation History:
 {history}
-"""
-    ),
-    HumanMessagePromptTemplate.from_template("Player: {input}"),
-    AIMessagePromptTemplate.from_template("NPC: "),
+User: {input}""",
+    },
 ]
+# apply the chat template appropriate for the HF model
+# see https://huggingface.co/docs/transformers/en/chat_templating
+chat_prompt = tokenizer.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True, return_tensors="pt"
+)
+# append character name to assistant generation prompt
+# otherwise the model will prepend this to the response
+template = chat_prompt + "{name}:"
 
 
 class Conversation:
     def __init__(self, name: str, index: NPCMemoryVectorStore) -> None:
         llm = HuggingFaceEndpoint(
-            repo_id="HuggingFaceH4/zephyr-7b-beta",
+            repo_id=MODEL,
             temperature=LLM_TEMP,
             repetition_penalty=LLM_FREQUENCY_PENALTY,
         )
-        prompt = ChatPromptTemplate.from_messages(messages=messages)
         self._conversation_chain = ConversationChain(
             llm=llm,
             verbose=False,
-            prompt=prompt,
+            prompt=PromptTemplate.from_template(template),
             memory=IndexedMemory(
                 name=name,
                 index=index,
