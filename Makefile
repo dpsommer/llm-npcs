@@ -12,7 +12,9 @@ ifeq ($(TRUNK_INSTALLED), 0)
 endif
 
 trunk:
+	@trunk upgrade check
 	@trunk fmt --all
+	@trunk cache prune
 
 test:
 	@pip install -qq --upgrade tox
