@@ -26,7 +26,7 @@ Consider the user-provided context and conversation history when writing a respo
 
 Character:
 
-Name: {name}""",
+{character_sheet}""",
     },
     {
         "role": "user",

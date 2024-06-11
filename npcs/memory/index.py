@@ -7,6 +7,7 @@ from langchain.schema import BaseMemory
 from pydantic.v1 import BaseModel
 
 from . import nlp
+from .character import Character
 from .schema import NPCMemory
 from .search import NPCMemoryVectorStore
 
@@ -16,10 +17,11 @@ class IndexedMemory(BaseMemory, BaseModel):
     index: NPCMemoryVectorStore
     name_key: str = "name"
     memory_key: str = "history"
+    char_sheet_key: str = "character_sheet"
 
     @property
     def memory_variables(self) -> List[str]:
-        return [self.name_key, self.memory_key]
+        return [self.name_key, self.memory_key, self.char_sheet_key]
 
     def load_memory_variables(self, inputs: Dict[str, str]) -> Dict[str, str]:
         print("Loading memories: ", inputs)
@@ -27,7 +29,12 @@ class IndexedMemory(BaseMemory, BaseModel):
         # pipeline when saving memories; can we avoid running it both times?
         search = f'npc:"{self.name}"'
         memories = "\n".join([mem.memory for mem in self.index.search_memories(search)])
-        return {self.name_key: self.name, self.memory_key: memories}
+        character_sheet = Character.load_character(self.name)
+        return {
+            self.name_key: self.name,
+            self.memory_key: memories,
+            self.char_sheet_key: str(character_sheet),
+        }
 
     def save_context(self, inputs: Dict[str, str], outputs: Dict[str, str]) -> None:
         print("Saving memories: ", inputs, outputs)
