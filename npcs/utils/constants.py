@@ -20,3 +20,4 @@ NPC_INDEX_NAME = "npc_memories"
 HOME_DIRECTORY = Path.home()
 ROOT_DIRECTORY = HOME_DIRECTORY / ".config" / "npcs"
 INDEX_PATH = ROOT_DIRECTORY / "index"
+CHARACTER_CONFIG_PATH = ROOT_DIRECTORY / "characters"
