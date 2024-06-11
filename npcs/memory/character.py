@@ -1,13 +1,8 @@
 from dataclasses import asdict, dataclass
-from pathlib import Path
-from pprint import pprint
-from typing import List
 
 import yaml
 
 from npcs.utils import CHARACTER_CONFIG_PATH
-
-from .schema import NPCMemory
 
 
 def normalize(name: str) -> str:
