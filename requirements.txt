@@ -6,7 +6,7 @@ tiktoken==0.8.0  # needed for FAISS
 spacy==3.8.2
 # spacy core model: en_core_web_sm v3.7.1
 en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
-spacytextblob==4.0.0
+spacytextblob==5.0.0
 # python -m textblob.download_corpora
 fastcoref==2.1.6
 faiss-cpu==1.9.0
