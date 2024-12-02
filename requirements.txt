@@ -1,7 +1,7 @@
 langchain==0.3.8
 langchain-community==0.3.8
 langchain-huggingface==0.1.2
-huggingface-hub==0.26.2
+huggingface-hub==0.26.3
 tiktoken==0.8.0  # needed for FAISS
 spacy==3.8.2
 # spacy core model: en_core_web_sm v3.7.1
