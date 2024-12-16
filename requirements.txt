@@ -3,7 +3,7 @@ langchain-community==0.3.10
 langchain-huggingface==0.1.2
 huggingface-hub==0.26.5
 tiktoken==0.8.0  # needed for FAISS
-spacy==3.8.2
+spacy==3.8.3
 # spacy core model: en_core_web_sm v3.7.1
 en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
 spacytextblob==5.0.0
