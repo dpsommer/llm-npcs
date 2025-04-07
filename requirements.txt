@@ -1,4 +1,4 @@
-langchain==0.3.21
+langchain==0.3.23
 langchain-community==0.3.21
 langchain-huggingface==0.1.2
 huggingface-hub==0.29.2
