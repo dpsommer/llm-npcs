@@ -1,5 +1,5 @@
 langchain==0.3.25
-langchain-community==0.3.24
+langchain-community==0.3.25
 langchain-huggingface==0.2.0
 huggingface-hub==0.32.4
 tiktoken==0.9.0  # needed for FAISS
