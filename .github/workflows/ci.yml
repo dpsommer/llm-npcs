@@ -1,4 +1,4 @@
-name: CI checks
+name: CI Checks
 on:
   pull_request:
     branches: main
@@ -17,5 +17,3 @@ jobs:
       - uses: actions/checkout@v5
       - name: Trunk Code Quality
         uses: trunk-io/trunk-action@v1
-        with:
-          post-annotations: true
