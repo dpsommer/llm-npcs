@@ -1,10 +1,7 @@
 from typing import Dict, List
 
 from langchain.schema import BaseMemory
-
-# XXX: we need to pin pydantic to v1 as langchain internals have not migrated to v2
-# see https://python.langchain.com/v0.1/docs/guides/development/pydantic_compatibility/
-from pydantic.v1 import BaseModel
+from pydantic import BaseModel
 
 from . import nlp
 from .schema import NPCMemory

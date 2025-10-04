@@ -1,0 +1,26 @@
+# Required for annotating fork PRs, see the action README:
+# https://github.com/trunk-io/trunk-action?tab=readme-ov-file#getting-inline-annotations-for-fork-prs
+name: Annotate PR with trunk issues
+
+on:
+  workflow_run:
+    workflows: [CI Checks]
+    types: [completed]
+
+permissions:
+  checks: write # For trunk to post annotations
+  contents: read # For repo checkout
+
+jobs:
+  trunk_check:
+    name: Trunk Code Quality Annotate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Trunk Check
+        uses: trunk-io/trunk-action@v1
+        with:
+          post-annotations: true

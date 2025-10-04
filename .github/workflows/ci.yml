@@ -1,0 +1,19 @@
+name: CI Checks
+on:
+  pull_request:
+    branches: main
+  schedule:
+    # Run at 8 AM UTC daily
+    - cron: 0 8 * * *
+
+permissions:
+  checks: write # For trunk to post annotations
+  contents: read # For repo checkout
+
+jobs:
+  trunk_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Trunk Code Quality
+        uses: trunk-io/trunk-action@v1
