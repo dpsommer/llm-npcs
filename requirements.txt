@@ -10,4 +10,4 @@ spacytextblob==5.0.0
 # python -m textblob.download_corpora
 fastcoref==2.1.6
 faiss-cpu==1.12.0
-protobuf==6.32.1  # needed for pydantic BaseModel
+protobuf==6.33.0  # needed for pydantic BaseModel
