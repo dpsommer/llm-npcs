@@ -9,5 +9,5 @@ en_core_web_sm@https://github.com/explosion/spacy-models/releases/download/en_co
 spacytextblob==5.1.0
 # python -m textblob.download_corpora
 fastcoref==2.1.6
-faiss-cpu==1.12.0
+faiss-cpu==1.13.0
 protobuf==6.33.0  # needed for pydantic BaseModel
